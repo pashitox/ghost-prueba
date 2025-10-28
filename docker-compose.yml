@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  ghost_v6:
+    image: ghost:6-alpine  
+    container_name: ghost_v6
+    restart: unless-stopped
+    ports:
+      - "2368:2368"
+    environment:
+      url: http://localhost:2368
+      database__client: sqlite3
+      database__connection__filename: /var/lib/ghost/content/data/ghost.db
+    volumes:
+      - ./ghost_data:/var/lib/ghost/content
