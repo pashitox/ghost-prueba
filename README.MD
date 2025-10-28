@@ -1,108 +1,136 @@
 # 🚀 Ghost Migration Toolkit
 
-**Herramienta profesional para migraciones y despliegues de Ghost CMS**  
-*Domina las migraciones de Ghost como un profesional - Perfecto para prácticas profesionales*
+**Professional tool for Ghost CMS migrations and deployments**  
+*Master Ghost CMS operations - Perfect for professional practices*
+
+![Ghost CMS](https://img.shields.io/badge/Ghost-CMS-brightgreen)
+![Docker](https://img.shields.io/badge/Docker-Containers-blue)
+![Automation](https://img.shields.io/badge/Automation-Scripts-orange)
+![Bash](https://img.shields.io/badge/Bash-Scripting-yellow)
 
 ---
 
-## 📖 Descripción
+## 📖 Description
 
-Este proyecto contiene todo lo necesario para realizar migraciones exitosas de Ghost CMS entre diferentes entornos. Desarrollado durante prácticas profesionales, incluye flujos de trabajo probados, scripts automatizados y documentación completa.
+This project contains everything needed for successful Ghost CMS migrations between different environments. Developed during professional internships, it includes tested workflows, automated scripts and complete documentation.
 
-## 🎯 Lo Que Aprendí
+## 🎯 What I Learned
 
-### 💻 Habilidades Técnicas
-- **Docker & Docker Compose**: Contenerización de aplicaciones
-- **Ghost CMS**: Administración y migración de contenidos
-- **SQLite/MySQL**: Manejo de bases de datos en Ghost
-- **Bash Scripting**: Automatización de procesos
-- **Backup/Restore**: Estrategias de respaldo y recuperación
+### 💻 Technical Skills
+- **Docker & Docker Compose**: Application containerization
+- **Ghost CMS**: Content management and migration
+- **SQLite/MySQL**: Database management in Ghost
+- **Bash Scripting**: Process automation
+- **Backup/Restore**: Backup and recovery strategies
 
-### 🔄 Flujos de Migración
-- Migración desarrollo → producción
-- Exportación/importación de datos
-- Resolución de conflictos de versiones
-- Mantenimiento de integridad de datos
+### 🔄 Migration Flows
+- Development → production migration
+- Data export/import
+- Version conflict resolution
+- Data integrity maintenance
 
-### 🛠️ Solución de Problemas
-- Diagnóstico de contenedores Docker
-- Manejo de errores de importación
-- Configuración de variables de entorno
-- Optimización de rendimiento
+### 🛠️ Problem Solving
+- Docker container diagnostics
+- Import error handling
+- Environment variable configuration
+- Performance optimization
 
 ---
 
-## 🏗️ Arquitectura del Proyecto
+## 🏗️ Project Architecture
 
 ```
 ghost-migration-toolkit/
-├── 📁 ghost_data/                 # Datos de la aplicación
-│   ├── data/ghost.db             # Base de datos SQLite
-│   ├── images/                   # Archivos multimedia
-│   └── config.production.json    # Configuración
-├── 🐳 docker-compose.yml         # Orquestación de contenedores
-├── 📜 migration-scripts/         # Scripts de automatización
-├── 📚 docs/                      # Documentación técnica
-└── 🔧 troubleshooting/           # Soluciones a problemas comunes
+├── 📁 ghost_data/                 # Application data
+│   ├── data/ghost.db             # SQLite database
+│   ├── images/                   # Media files
+│   └── config.production.json    # Configuration
+├── 🐳 docker-compose.yml         # Container orchestration
+├── 📜 migration-scripts/         # Automation scripts
+├── 📚 docs/                      # Technical documentation
+└── 🔧 troubleshooting/           # Common problem solutions
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-### Prerrequisitos
+### Prerequisites
 ```bash
-# Verificar instalaciones
+# Verify installations
 docker --version
 docker-compose --version
 git --version
 ```
 
-### Inicio Rápido
+### Quick Start
 ```bash
-# 1. Clonar proyecto
-git clone https://github.com/tuusuario/ghost-migration-toolkit.git
+# 1. Clone project
+git clone https://github.com/yourusername/ghost-migration-toolkit.git
 cd ghost-migration-toolkit
 
-# 2. Iniciar entorno
+# 2. Start environment
 docker-compose up -d
 
-# 3. Acceder a la aplicación
+# 3. Access application
 echo "🌐 Frontend: http://localhost:2368"
 echo "⚙️  Admin: http://localhost:2368/ghost"
 ```
 
 ---
 
-## 🔄 Flujos de Trabajo
+## 🔄 Workflow Examples
 
-### 📥 Migración de Datos (Desarrollo → Producción)
+### 📥 Data Migration (Development → Production)
 ```bash
-# 1. Exportar desde origen
+# 1. Export from source
 ./scripts/export-backup.sh
 
-# 2. Transferir archivo
-scp backup-$(date +%Y-%m-%d).json usuario@produccion:/ruta/
+# 2. Transfer file
+scp backup-$(date +%Y-%m-%d).json user@production:/path/
 
-# 3. Importar en destino
+# 3. Import at destination
 ./scripts/import-backup.sh
 ```
 
-### 🗂️ Backup Automático
+### 🗂️ Automated Backup
 ```bash
-# Backup programado (agregar a crontab)
-0 2 * * * /ruta/al/proyecto/scripts/scheduled-backup.sh
+# Scheduled backup (add to crontab)
+0 2 * * * /path/to/project/scripts/scheduled-backup.sh
 ```
 
-### 🔍 Diagnóstico Rápido
+### 🔍 Quick Diagnostics
 ```bash
-# Verificar estado completo
+# Check complete status
 ./scripts/health-check.sh
 ```
 
 ---
 
-## 📊 Estructura de Docker Compose
+## 📋 Migration Checklist
+
+### ✅ Before Starting:
+- [ ] Docker installed
+- [ ] `docker-compose.yml` file available
+- [ ] Data backup available (if applicable)
+- [ ] Admin credentials known
+
+### ✅ During Migration:
+- [ ] Start containers: `docker-compose up -d`
+- [ ] Verify frontend: http://localhost:2368/
+- [ ] Verify admin: http://localhost:2368/ghost/
+- [ ] Import data (if backup available)
+- [ ] Verify everything works
+
+### ✅ After Migration:
+- [ ] Test post creation
+- [ ] Test configuration changes
+- [ ] Document changes made
+- [ ] Backup new state
+
+---
+
+## 🐳 Docker Compose Structure
 
 ```yaml
 version: "3.9"
@@ -118,188 +146,62 @@ services:
       url: ${SITE_URL:-http://localhost:2368}
       database__client: sqlite3
       database__connection__filename: /var/lib/ghost/content/data/ghost.db
-      NODE_ENV: production
     volumes:
       - ./ghost_data:/var/lib/ghost/content
-    networks:
-      - ghost_network
-
-networks:
-  ghost_network:
-    driver: bridge
 ```
 
 ---
 
-## 🛠️ Scripts Incluidos
+## 🛠️ Included Scripts
 
-### 🔄 Migración
-- `migrate-dev-to-prod.sh` - Migración completa entre entornos
-- `export-with-media.sh` - Exportación incluyendo archivos multimedia
-- `validate-backup.sh` - Validación de integridad de backups
+### 🔄 Migration
+- `migrate-dev-to-prod.sh` - Complete environment migration
+- `export-with-media.sh` - Export including media files
+- `validate-backup.sh` - Backup integrity validation
 
-### 🩺 Salud del Sistema
-- `container-health.sh` - Diagnóstico de contenedores
-- `database-integrity.sh` - Verificación de base de datos
-- `performance-check.sh` - Análisis de rendimiento
+### 🩺 System Health
+- `container-health.sh` - Container diagnostics
+- `database-integrity.sh` - Database verification
+- `performance-check.sh` - Performance analysis
 
-### 🔐 Seguridad
-- `rotate-credentials.sh` - Rotación de credenciales
-- `backup-encryption.sh` - Backup con encriptación
-- `access-audit.sh` - Auditoría de accesos
-
----
-
-## 📈 Casos de Uso Comunes
-
-### 🆕 Nuevo Desarrollador en el Proyecto
-```bash
-# Onboarding en 5 minutos
-git clone <repo>
-docker-compose up -d
-# ¡Listo! Desarrollando...
-```
-
-### 🚨 Recuperación de Desastre
-```bash
-# Recuperación completa
-./scripts/disaster-recovery.sh --backup-file=backup-2024-01-15.json
-```
-
-### 🔄 Actualización de Versión
-```bash
-# Actualización segura
-./scripts/safe-upgrade.sh --from=5.0 --to=6.0
-```
+### 🔐 Security
+- `rotate-credentials.sh` - Credential rotation
+- `backup-encryption.sh` - Encrypted backups
+- `access-audit.sh` - Access auditing
 
 ---
 
-## 🐛 Solución de Problemas Comunes
+## 📞 Support
 
-### ❌ Ghost muestra contenido por defecto
+### 🆘 Need Help?
+1. **Check documentation** in `/docs/`
+2. **Review closed issues** for known solutions
+3. **Run diagnostics**: `./scripts/health-check.sh`
+4. **Create issue** with diagnostic output
+
+### 🐛 Report Bugs
+Always include:
 ```bash
-# Solución: Los datos no se cargaron correctamente
-./scripts/force-data-import.sh --backup=mi-backup.json
-```
-
-### ❌ Error de permisos en volúmenes Docker
-```bash
-# Solución: Reajustar permisos
-sudo chown -R 1000:1000 ghost_data/
-```
-
-### ❌ Puerto ya en uso
-```bash
-# Solución: Cambiar puerto
-export HOST_PORT=2370
-docker-compose up -d
-```
-
----
-
-## 📋 Checklist de Producción
-
-### ✅ Pre-Despliegue
-- [ ] Backups verificados
-- [ ] Variables de entorno configuradas
-- [ ] SSL/TLS configurado
-- [ ] Monitorización activa
-
-### ✅ Post-Despliegue
-- [ ] Funcionalidad end-to-end probada
-- [ ] Performance benchmarks
-- [ ] Plan de rollback preparado
-- [ ] Documentación actualizada
-
----
-
-## 🔮 Mejores Prácticas Aprendidas
-
-### 🎯 Migraciones
-1. **Siempre validar backups** antes de migrar
-2. **Mantener compatibilidad** de versiones
-3. **Documentar cada paso** del proceso
-4. **Tener plan de rollback** siempre disponible
-
-### 🐳 Docker
-1. **Usar volúmenes nombrados** para datos persistentes
-2. **Variables de entorno** para configuración
-3. **Health checks** en contenedores
-4. **Logs centralizados** para debugging
-
-### 📊 Monitoreo
-1. **Health checks automáticos**
-2. **Métricas de performance**
-3. **Alertas tempranas**
-4. **Backups verificados regularmente**
-
----
-
-## 🤝 Contribución
-
-### Para Nuevos Colaboradores
-```bash
-# 1. Fork del proyecto
-# 2. Crear rama feature/nueva-funcionalidad
-# 3. Desarrollar con contenedores
-docker-compose up -d
-# 4. Probar cambios
-./scripts/test-suite.sh
-# 5. Pull Request
-```
-
-### Guía de Estilos
-- Scripts Bash: Google Shell Style Guide
-- Documentación: Markdown con ejemplos ejecutables
-- Commits: Conventional Commits
-
----
-
-## 📞 Soporte
-
-### 🆘 ¿Necesitas Ayuda?
-1. **Consulta la documentación** en `/docs/`
-2. **Revisa issues cerrados** para soluciones conocidas
-3. **Ejecuta diagnóstico**: `./scripts/health-check.sh`
-4. **Crea un issue** con la salida del diagnóstico
-
-### 🐛 Reportar Bugs
-Incluir siempre:
-```bash
-# Información del entorno
+# Environment information
 ./scripts/environment-info.sh
-# Logs relevantes
+# Relevant logs
 docker-compose logs ghost
 ```
 
 ---
 
-## 📜 Licencia
+## 📜 License
 
-MIT License - Ver archivo `LICENSE` para detalles.
+MIT License - See `LICENSE` file for details.
 
-## 🙏 Reconocimientos
+## 🙏 Acknowledgments
 
-Desarrollado durante prácticas profesionales como parte del proceso de aprendizaje en administración de sistemas y DevOps.
-
----
-
-## 🎓 Lo Que Esta Experiencia Me Enseñó
-
-### 💡 Lecciones Clave
-1. **La simplicidad es poderosa**: Soluciones simples suelen ser más efectivas
-2. **Documentación salva proyectos**: Buena doc ahorra horas de debugging
-3. **Automate everything**: Lo que se hace 2 veces debe automatizarse
-4. **Backups verificados**: Un backup no verificado es como no tener backup
-
-### 🚀 Habilidades Adquiridas
-- **Pensamiento sistémico**: Ver el panorama completo
-- **Resolución metódica**: Enfocar problemas paso a paso  
-- **Comunicación técnica**: Explicar conceptos complejos simplemente
-- **Gestión de estrés**: Mantener la calma bajo presión
-
-**⭐ ¿Te sirvió este proyecto? ¡Dale una estrella al repo!**
+Developed during professional internships as part of the learning process in systems administration and DevOps.
 
 ---
 
-*"La migración perfecta es como el arte: parece mágica, pero es puro proceso metódico"* - Aprendido durante prácticas profesionales 🎯
+**⭐ Found this project useful? Give the repo a star!**
+
+---
+
+*"The perfect migration is like art: it seems magical, but it's pure methodical process"* - Learned during professional internships 🎯
